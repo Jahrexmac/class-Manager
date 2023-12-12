@@ -43,7 +43,7 @@ export default function ClassroomEdit() {
         teacher: event.target.teacher.value,
         user: browserData.cmid
       }
-      const data = await editClass(classDetail, id);
+      await editClass(classDetail, id);
       browserData.token ? navigate(`/classroom-details/${id}`) : navigate('/');
     } catch (error) {
       //   toast.error(error.message, {closeButton: true, position: "bottom-center"});

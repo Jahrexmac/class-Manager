@@ -24,7 +24,7 @@ export default function ClassroomAddPage() {
         teacher: event.target.teacher.value,
         user: browserData.cmid
       }
-      const data = await createClass(classDetail);
+      await createClass(classDetail);
       browserData.token ? navigate("/classroom"): navigate('/');
     } catch(error){
     //   toast.error(error.message, {closeButton: true, position: "bottom-center"});

@@ -77,6 +77,7 @@ export default function StudentDetailPage() {
 
         if (studentsDetails.length > 1) {
           setMoreStudent(true);
+              // eslint-disable-next-line
           studentsDetails.map((std, i) => {
             if (std.id === studentDetails.id) {
               if (studentsDetails.length - i === 1) {
@@ -90,7 +91,7 @@ export default function StudentDetailPage() {
                 setNextStudent(studentsDetails[i + 1]);
                 setPrevStudent(studentsDetails[i - 1]);
               }
-
+              // eslint-disable-next-line
               return
             }
           })

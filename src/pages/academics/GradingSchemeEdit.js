@@ -9,7 +9,6 @@ import { useTitle } from '../../hooks/useTitle';
 export default function GradingSchemeEdit() {
     useTitle('Edit Grading Scheme')
     const { id } = useParams();
-    const [classroom, setClassroom] = useState([])
     const [gradeScheme, setGradeScheme] = useState([])
     const navigate = useNavigate();
 
@@ -25,10 +24,6 @@ export default function GradingSchemeEdit() {
             try {
                 const gradeSchemeData = await getGradeScheme(id);
                 setGradeScheme(gradeSchemeData);
-                const classData = await getClass(gradeSchemeData.classroom);
-                // eslint-disable-next-line
-                setClassroom(classData);
-
             } catch (error) {
                 // toast.error(error.message, {closeButton: true, position: "bottom-center" });
             }
