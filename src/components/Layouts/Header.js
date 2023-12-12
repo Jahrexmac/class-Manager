@@ -32,15 +32,15 @@ export default function Header(props) {
 
             <nav className="bg-gray-600  border-gray-300 dark:bg-gray-900 w-full fixed top-0">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <a href="https://flowbite.com/" className="flex items-center">
+                    <Link to="/" className="flex items-center">
                         <img src={Logo} className="h-8 mr-3" alt="Flowbite Logo" />
-                        <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
+                        <span className="self-center font-semibold whitespace-nowrap text-white">
                             {
                                 props.title ? props.title :
                                     "Class Manager"
                             }
                         </span>
-                    </a>
+                    </Link>
                  
                     <div className="flex items-center md:order-2">
 
