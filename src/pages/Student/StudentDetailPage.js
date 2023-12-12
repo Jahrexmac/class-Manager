@@ -5,8 +5,9 @@ import { Link, useParams } from "react-router-dom";
 import { getStudent, studentResultCalculator } from './Helper/Helper';
 import { getClass, getStudents } from '../Classroom/Helper/Helper';
 import { getAssessmentList, getGradeSchemeList, getStudentSubjects, getSubjectList } from '../academics/Helper';
-import MalePhoto from '../../assets/male.jpg'
-import FemalePhoto from '../../assets/female.jpeg'
+import MalePhoto from '../../assets/male.png'
+import FemalePhoto from '../../assets/female.png'
+import Unisex from '../../assets/unisex.png'
 import { useTitle } from '../../hooks/useTitle';
 
 export default function StudentDetailPage() {
@@ -21,12 +22,14 @@ export default function StudentDetailPage() {
   const [nextStudent, setNextStudent] = useState({});
   const [prevStudent, setPrevStudent] = useState({});
   const [isMale, setIsMale] = useState(false);
+  const [isFemale, setIsFemale] = useState(false)
+  const [isUnisex, setIsUnisex] = useState(false)
   const [grandTotal, setGrandTotal] = useState(0);
   const [averageTotal, setAverageTotal] = useState(0);
   // const [grades, setGrades] = useState([]);
 
-const gradeRed = "px-6 py-4 whitespace-nowrap text-sm font-medium text-red-500 dark:text-red-500"
-const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gray-900"
+  const gradeRed = "px-6 py-4 whitespace-nowrap text-sm font-medium text-red-500 dark:text-red-500"
+  const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gray-900"
 
 
 
@@ -44,6 +47,19 @@ const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gr
         const studentDetails = await getStudent(id);
         if (studentDetails.sex === 'Male') {
           setIsMale(true)
+          setIsFemale(false)
+          setIsUnisex(false)
+
+        } else if (studentDetails.sex === 'Female') {
+          setIsFemale(true)
+          setIsUnisex(false)
+          setIsMale(false)
+
+        } else {
+          setIsUnisex(true)
+          setIsFemale(false)
+          setIsMale(false)
+
         }
         const gradeData = await getGradeSchemeList(parseInt(studentDetails.classroom)); // grading scheme
         setStudent(studentDetails);
@@ -55,7 +71,7 @@ const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gr
         setAssessmentList(assessmentListData[0].assessments);
         const allSubjectData = await getStudentSubjects(id);
         const studentsDetails = await getStudents(studentDetails.classroom);// retrieves all student in class
-        
+
         const resultData = await studentResultCalculator(allSubjectData, gradeData)
         setSubjectResult(resultData[0])
 
@@ -91,64 +107,106 @@ const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gr
       }
     }
     fetchStudentData();
-    if (nextStudent.sex !== 'Male') {
+    if (nextStudent.sex !== 'Male' && nextStudent.sex !== 'Nill') {
       setIsMale(false)
-    }
-    if (prevStudent.sex !== 'Male') {
+      setIsUnisex(false)
+      setIsFemale(true)
+    } else if (nextStudent.sex !== 'Female' && nextStudent.sex !== 'Nill') {
+      setIsMale(true)
+      setIsUnisex(false)
+      setIsFemale(false)
+    } else {
       setIsMale(false)
+      setIsUnisex(true)
+      setIsFemale(false)
     }
+
+    if (prevStudent.sex !== 'Male' && prevStudent.sex !== 'Nill') {
+      setIsMale(false)
+      setIsUnisex(false)
+      setIsFemale(true)
+    } else if (prevStudent.sex !== 'Female' && prevStudent.sex !== 'Nill') {
+      setIsMale(true)
+      setIsUnisex(false)
+      setIsFemale(false)
+    } else {
+      setIsMale(false)
+      setIsUnisex(true)
+      setIsFemale(false)
+    }
+
   }, [id]); //eslint-disable-line
 
 
   return (
     <>
-      <Header links={navItem} title={classroom.name ? (classroom.name).toUpperCase(): ''} loggedIn={true}/>
+      <Header links={navItem} title={classroom.name ? (classroom.name).toUpperCase() : ''} loggedIn={true} />
       <main className='my-20 dark:bg-gray-400 dark:text-white' >
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {
             moreStudent ?
               <div className="flex  justify-between">
-                <Link  to={`/student-details/${prevStudent.id}`} className="text-white bg-yellow-600 text-white hover:bg-yellow-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium mr-4">Prev</Link>
-                <Link  to={`/student-details/${nextStudent.id}`} className="text-white bg-green-600 hover:bg-green-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Next</Link>
+                <Link to={`/student-details/${prevStudent.id}`} className="text-white bg-yellow-600 text-white hover:bg-yellow-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium mr-4">Prev</Link>
+                <Link to={`/student-details/${nextStudent.id}`} className="text-white bg-green-600 hover:bg-green-200 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Next</Link>
               </div>
               :
               <></>
           }
 
-          <div className=" flex flex flex-col items-center">
-
-            <img src={isMale ? MalePhoto : FemalePhoto} alt={student.name} className="w-40 h-40 object-cover rounded-full mb-4" />
-          </div>
-          <br />
-          <h3 className="text-lg leading-6 font-medium text-center "><span className='p-2 rounded-md text-white dark:text-pink-300 bg-gray-900'>{student.name ? (student.name).toUpperCase() : ''}</span></h3>
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 mt-4 ">
-            <div className="sm:col-span-1 ">
-              <dt className="text-sm font-medium text-gray-500 dark:text-white">Classroom</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-white">{classroom.name}</dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500 dark:text-white">Date of Birth</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.dob}</dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500 dark:text-white">Sex</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.sex}</dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500 dark:text-white">Email</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.email}</dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500 dark:text-white">Phone Number</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.phone}</dd>
-            </div>
-            <div className="sm:col-span-1">
-              <dt className="text-sm font-medium text-gray-500 dark:text-white">Address</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.address}</dd>
-            </div>
-          </dl>
         </div>
+        <div>
+          {
+            isMale ?
+              <div className="flex flex-col items-center">
+                <img src={MalePhoto} alt={student.name} className="w-40 h-40 object-cover rounded-full mb-4" />
+              </div>
+              : <></>
 
+          }
+          {
+            isFemale ?
+              <div className="flex flex-col items-center">
+                <img src={FemalePhoto} alt={student.name} className="w-40 h-40 object-cover rounded-full mb-4" />
+              </div>
+              : <></>
+
+          }
+          {
+            isUnisex ?
+              <div className="flex flex-col items-center">
+                <img src={Unisex} alt={student.name} className="w-40 h-40 object-cover rounded-full mb-4" />
+              </div>
+              : <></>
+          }
+        </div>
+        <br />
+        <h3 className="text-lg leading-6 font-medium text-center "><span className='p-2 rounded-md text-white dark:text-pink-300 bg-gray-900'>{student.name ? (student.name).toUpperCase() : ''}</span></h3>
+        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 mt-4 ">
+          <div className="sm:col-span-1 ">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Classroom</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white">{classroom.name}</dd>
+          </div>
+          <div className="sm:col-span-1">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Date of Birth</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.dob}</dd>
+          </div>
+          <div className="sm:col-span-1">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Sex</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.sex}</dd>
+          </div>
+          <div className="sm:col-span-1">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Email</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.email}</dd>
+          </div>
+          <div className="sm:col-span-1">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Phone Number</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.phone}</dd>
+          </div>
+          <div className="sm:col-span-1">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Address</dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.address}</dd>
+          </div>
+        </dl>
         {/* <!--  academic details--> */}
         <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-green-100 text-center mt-8"><span className='bg-gray-900 text-white rounded-md p-2'>ACADEMIC DETAILS</span></h4>
         <br />
@@ -208,28 +266,28 @@ const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gr
 
                   {subjectResult.map((result) => (
                     <tr key={result.sn}>
-                      <td className={result.gradeColor === 'red'? gradeRed : gradeblack}>
+                      <td className={result.gradeColor === 'red' ? gradeRed : gradeblack}>
                         {result.sn}
                       </td>
-                      <td className={result.gradeColor === 'red'? gradeRed : gradeblack}>
+                      <td className={result.gradeColor === 'red' ? gradeRed : gradeblack}>
                         {result.subject ? (result.subject).toUpperCase() : ''}
                       </td>
                       {/* loop the scores for assessment */}
                       {result.assessment.map((score, i) => (
-                        <td key={Math.random() * 100} className={result.gradeColor === 'red'? gradeRed : gradeblack}>
+                        <td key={Math.random() * 100} className={result.gradeColor === 'red' ? gradeRed : gradeblack}>
                           {score}
                         </td>
                       ))
 
                       }
                       {/* end of scores loop */}
-                      <td className={result.gradeColor === 'red'? gradeRed : gradeblack}>
+                      <td className={result.gradeColor === 'red' ? gradeRed : gradeblack}>
                         {result.total}
                       </td>
-                      <td className={result.gradeColor === 'red'? gradeRed : gradeblack}>
+                      <td className={result.gradeColor === 'red' ? gradeRed : gradeblack}>
                         {result.gradeLetter}
                       </td>
-                      <td className={result.gradeColor === 'red'? gradeRed : gradeblack}>
+                      <td className={result.gradeColor === 'red' ? gradeRed : gradeblack}>
                         {result.remark}
                       </td>
 
