@@ -9,6 +9,7 @@ import { useTitle } from '../../hooks/useTitle';
 export default function SubjectAdd() {
     useTitle('Add Subject')
     const { id } = useParams();
+    // eslint-disable-next-line
     const [classroom, setClassroom] = useState([]);
     const [students, setStudents] = useState([]);
     const [subjectList, setSubjectList] = useState([]);
@@ -22,7 +23,6 @@ export default function SubjectAdd() {
     const hideTextareaAssessment = "w-full border border-gray-400 p-2 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 hidden"
     const AssessmentInfo = "text-gray-600";
     const AssessmentInput = "mb-6";
-    const navItem = [];
     const navigate = useNavigate();
 
     function getSession() {

@@ -26,6 +26,7 @@ export default function GradingSchemeEdit() {
                 const gradeSchemeData = await getGradeScheme(id);
                 setGradeScheme(gradeSchemeData);
                 const classData = await getClass(gradeSchemeData.classroom);
+                // eslint-disable-next-line
                 setClassroom(classData);
 
             } catch (error) {

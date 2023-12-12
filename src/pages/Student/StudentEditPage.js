@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
-import Header from '../../components/Layouts/Header'
 import { useTitle } from '../../hooks/useTitle';
 import { editStudent, getStudent } from './Helper/Helper';
 
@@ -62,7 +61,7 @@ export default function StudentEditPage() {
         address: event.target.address.value,
         classroom: student.classroom
       }
-      const data = await editStudent(studentDetail, id);
+      await editStudent(studentDetail, id);
       browserData.token ? navigate(`/student-details/${id}`) : navigate('/');
     } catch (error) {
       //   toast.error(error.message, {closeButton: true, position: "bottom-center"});
