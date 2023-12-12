@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react'
-import { getClass } from '../Classroom/Helper/Helper';
 import { useParams } from "react-router-dom";
 import { editGradingScheme, getGradeScheme } from './Helper';
 import { useNavigate } from 'react-router-dom';
