@@ -37,11 +37,11 @@ export default function ClassroomAddPage() {
     <>
       <Header link={navItem} loggedIn={true}/>
 
-      <main className='dark:bg-gray-500'>
+      <main className='my-20 dark:bg-gray-500'>
         <div className="flex justify-center">
-          <h3 className="text-3xl font-bold">Create Classroom</h3>
+          <h3 className="text-3xl font-bold dark:text-white">Create Classroom</h3>
         </div>
-        <form onSubmit={handleCreateClassroom} className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 my-5">
+        <form onSubmit={handleCreateClassroom} className="max-w-lg mx-auto bg-white dark:bg-gray-300 shadow-lg rounded-lg p-6 my-5">
           <div className="mb-4">
             <label htmlFor="class_name" className="block text-gray-700 font-bold mb-2">Class Name:</label>
             <input type="text" name="class_name" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
