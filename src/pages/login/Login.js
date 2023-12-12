@@ -28,20 +28,6 @@ export default function Login() {
         }
     }
 
-    //   async function handleLoginGuest(){
-    //     email.current.value = process.env.REACT_APP_GUEST_LOGIN;
-    //     password.current.value = process.env.REACT_APP_GUEST_PASSWORD;
-    //     try{
-    //       const authDetail = {
-    //         email: email.current.value,
-    //         password: password.current.value
-    //       }
-    //       const data = await login(authDetail);
-    //       data.accessToken ? navigate("/products") : toast.error(data);
-    //     } catch(error){
-    //       toast.error(error.message, {closeButton: true, position: "bottom-center"});
-    //     }
-    //   }
 
     return (
         <>
