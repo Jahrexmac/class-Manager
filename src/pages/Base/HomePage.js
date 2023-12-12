@@ -15,7 +15,7 @@ export default function HomePage() {
       <main className='dark:bg-gray-500'>
         <div className="bg-gray-100 dark:bg-gray-500 min-h-screen flex items-center justify-center">
           <div className="bg-white dark:bg-gray-300 p-8 rounded-lg shadow-lg">
-            <h1 className="text-3xl font-semibold mb-4">Welcome to ClassManager</h1>
+            <h1 className="text-3xl font-semibold mb-4">Welcome to Class Manager</h1>
             <p className="text-gray-700 mb-8">
               Manage your classes and students with ease.
             </p>
