@@ -79,7 +79,7 @@ export default function StudentDetailPage() {
         let resultData = []
         resultData = await studentResultCalculator(allSubjectData, gradeData)
 
-        if (resultData.length > 0 ||studentDetails.name ) {
+        if (resultData.length ||studentDetails.name ) {
           setIsLoading(false)
         }
         
