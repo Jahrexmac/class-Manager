@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { toast } from 'react-toastify';
 // import { useTitle } from "../hooks/useTitle";
@@ -8,6 +8,7 @@ import login from "./LoginHandler";
 
 export default function Login() {
     useTitle('Login')
+    const [isError, setIsError] = useState(false)
     const navItem = [];
     //   useTitle("Login");
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function Login() {
             const data = await login(authDetail);
             data.accessToken ? navigate("/classroom") : navigate("/home");
         } catch (error) {
+            setIsError(true)
             //   toast.error(error.message, {closeButton: true, position: "bottom-center"});
         }
     }
@@ -47,7 +49,12 @@ export default function Login() {
                     </div>
                     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log In</button>
                 </form>
-
+                {
+                    isError ?
+                        <p className="my-2 bg-white rounded-md  p-2 text-center text-red-500">Incorrect Email or Password </p>
+                        :
+                        ''
+                }
                 <p className="text-center dark:text-white">Dont have an account? <Link to='/register'><span className="text-green-700 dark:text-lime-300">Signup</span></Link> </p>
                 {/* <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-3 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
                     <Link to='/register'>Signup</Link>
