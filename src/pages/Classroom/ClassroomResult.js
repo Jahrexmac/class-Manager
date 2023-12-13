@@ -8,7 +8,9 @@ import { studentResultCalculator } from '../Student/Helper/Helper';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import { useTitle } from '../../hooks/useTitle';
-
+import Loader from '../../components/Spinner'
+// const [isLoading, setIsLoading] = useState(true)
+// setIsLoading(false)
 export default function ClassroomResult() {
     useTitle('Class Result')
     const { id } = useParams();
@@ -17,7 +19,9 @@ export default function ClassroomResult() {
     const [assessmentList, setAssessmentList] = useState([]);
     const [allPositionedResult, setAllPositionedResult] = useState([]);
     const [allTotal, setAllTotal] = useState([]);
-   
+    const [isLoading, setIsLoading] = useState(true)
+
+
     const navItem = [
         <NavItem key={1} path={`/simplified-result/${id}`} name="Simplified Result" />,
         <NavItem key={2} path={`/classroom-details/${id}`} name="Back to class" />,
@@ -26,8 +30,8 @@ export default function ClassroomResult() {
 
     const gradeRed = "px-6 py-4 whitespace-nowrap text-sm font-medium text-red-500 dark:text-red-500"
     const gradeblack = "px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-gray-900"
-    
-   
+
+
     useEffect(() => {
         async function fetchClasses() {
             try {
@@ -41,6 +45,7 @@ export default function ClassroomResult() {
                 let allTotalData = []
 
                 if (studentsData.length) {
+                    
                     // studentsData.map((student) => {
                     for (let i = 0; i < studentsData.length; i++) {
                         let studentResult = {
@@ -91,7 +96,9 @@ export default function ClassroomResult() {
 
                 })
             })
-
+            if(tempResultPosition.length)(
+                setIsLoading(false)
+            )
             setAllPositionedResult(tempResultPosition)
         }
         fetchClasses();
@@ -101,37 +108,37 @@ export default function ClassroomResult() {
 
 
         const doc = new jsPDF({
-          format: 'a4',
-          unit: 'pt',
-          orientation: 'p'
+            format: 'a4',
+            unit: 'pt',
+            orientation: 'p'
         })
-  
-    const element = document.getElementById('main')
-    console.log(element)
 
-    let i = 1 //exclude the first div carrying download result
-    while(i < element.children.length){   
-        doc.autoTable({html:element.children[i].children[0].children[0]})
-        i++
+        const element = document.getElementById('main')
+        console.log(element)
+
+        let i = 1 //exclude the first div carrying download result
+        while (i < element.children.length) {
+            doc.autoTable({ html: element.children[i].children[0].children[0] })
+            i++
+        }
+
+
+
+        doc.save(`${classroom.name}-Result`)
     }
-    
-   
-    
-    doc.save(`${classroom.name}-Result`)
-      }
-    
+
 
 
     return (
         <>
             <Header title={`${classroom.name} Result`} links={navItem} loggedIn={true}></Header>
-     
-            <main  id='main' className='dark:bg-gray-700 flex-col justify-around'  >
-                       <div className='my-20  text-center dark:bg-gray-700 dark:text-green-300 text-green-300'>
-                        <button className=' dark:hover:bg-gray-800 hover:bg-gray-800 dark:bg-gray-500 my-2 bg-gray-700 rounded py-2 px-2' onClick={handleGeneratePdf}> Download Result</button>
 
-                        </div>
-               
+            <main id='main' className='dark:bg-gray-700 flex-col justify-around'  >
+                <div className='my-20  text-center dark:bg-gray-700 dark:text-green-300 text-green-300'>
+                    <button className=' dark:hover:bg-gray-800 hover:bg-gray-800 dark:bg-gray-500 my-2 bg-gray-700 rounded py-2 px-2' onClick={handleGeneratePdf}> Download Result</button>
+
+                </div>
+
                 {
                     allPositionedResult.length ?
                         allPositionedResult.map((subjectResult) => (
@@ -147,27 +154,27 @@ export default function ClassroomResult() {
                                 {/* {% if subjects %} check if subject in class */}
                                 {assessmentList.length ?
                                     <>
-                                     <div className="overflow-x-auto">
+                                        <div className="overflow-x-auto">
                                             <table className="w-full table-auto divide-y divide-gray-200 ">
                                                 <thead>
-                                                <tr>
-                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
-                                                    {subjectResult.name ? (subjectResult.name).toUpperCase(): ''}   
-                                                    </th>
-                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
-                                                    Position: {subjectResult.position}
-                                                    </th>
-                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
-                                                    Total: {subjectResult.result[1]}
-                                                    </th>
-                                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
-                                                    Average: {subjectResult.result[2]}
-                                                    </th>
-                                                    <th></th>
-                                                    {assessmentList.length ?
+                                                    <tr>
+                                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
+                                                            {subjectResult.name ? (subjectResult.name).toUpperCase() : ''}
+                                                        </th>
+                                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
+                                                            Position: {subjectResult.position}
+                                                        </th>
+                                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
+                                                            Total: {subjectResult.result[1]}
+                                                        </th>
+                                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
+                                                            Average: {subjectResult.result[2]}
+                                                        </th>
+                                                        <th></th>
+                                                        {assessmentList.length ?
                                                             assessmentList.map((assessment, i) => (
                                                                 <th key={i} scope="col" className="px-6 py-3 text-left text-xs font-medium dark:text-yellow-400 text-gray-500 uppercase tracking-wider">
-                                                                    
+
                                                                 </th>
                                                             )) :
                                                             <th></th>
@@ -176,7 +183,7 @@ export default function ClassroomResult() {
                                                     </tr>
                                                 </thead>
                                                 <thead className="bg-gray-50 dark:bg-gray-500">
-                                                   
+
                                                     <tr>
                                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-yellow-400 uppercase tracking-wider">
                                                             S/N
@@ -249,7 +256,7 @@ export default function ClassroomResult() {
                                                 </tbody>
                                                 {/* end of loop */}
                                             </table>
-                                            </div>
+                                        </div>
                                     </>
                                     :
                                     <div>No Class Result</div>
@@ -261,14 +268,24 @@ export default function ClassroomResult() {
                             </div>
                         ))
                         :
-                        <div></div> // end of allpositioned result
+                        <>
+                        {
+                            isLoading ?
+                            <div className='flex justify-center'>
+                            <Loader />
+                            </div>
+                            :
+                            <></>
+                        }
+                        </>
+                        // end of allpositioned result
                 }
-           
-                        
+
+
             </main>
 
         </>
-       
+
 
     )
 }

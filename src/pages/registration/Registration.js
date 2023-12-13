@@ -5,15 +5,19 @@ import register from './Register';
 import Header from '../../components/Layouts/Header';
 import { useTitle } from '../../hooks/useTitle';
 import { useState } from 'react';
+import Loader from '../../components/Spinner'
 
 export default function Registration() {
   useTitle('Register')
   const [isError, setIsError] = useState(false)
+  const [isLogin, setIsLogin] = useState(false)
+
   const navItem = []
   //   useTitle("Register");
   const navigate = useNavigate();
 
   async function handleRegister(event) {
+    setIsLogin(true)
     event.preventDefault();
     try {
       const authDetail = {
@@ -55,7 +59,15 @@ export default function Registration() {
           isError ?
             <p className="my-2 bg-white rounded-md  p-2 text-center text-red-500">Email already exist</p>
             :
-            ''
+            <>
+            {isLogin ? 
+              <div className="flex justify-center"> <Loader /></div>
+                 
+                  :
+                  
+                  ''
+           }
+           </>
         }
         <p className="text-center dark:text-white">Have an account? <Link to='/login'><span className="text-green-700 dark:text-lime-300">Login</span></Link> </p>
       </main>

@@ -8,6 +8,7 @@ import { getStudents } from './Helper/Helper'
 import { getClass } from './Helper/Helper';
 import { useTitle } from '../../hooks/useTitle';
 import { getSubjectList } from '../academics/Helper';
+import Loader from '../../components/Spinner'
 
 
 export default function ClassroomDetail() {
@@ -15,6 +16,8 @@ export default function ClassroomDetail() {
   const [classroom, setClassroom] = useState([]);
   const [students, setStudents] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+
 
   const { id } = useParams();
 
@@ -39,6 +42,9 @@ export default function ClassroomDetail() {
     async function fetchStudents() {
       try {
         const data = await getStudents(id);
+        if (!data.length) {
+          setIsLoading(false)
+        }
         setStudents(data);
       } catch (error) {
         // toast.error(error.message, {closeButton: true, position: "bottom-center" });
@@ -93,7 +99,16 @@ export default function ClassroomDetail() {
               <StudentCard key={student.id} student={student} />
             ))
             :
-            'You Dont Have Any Student In This Class Room, Please Add Students'
+            <> 
+            {
+              isLoading ? 
+              <Loader />
+              :
+            <p className='text-center'>You Dont Have Any Student In This Class Room, Please Add Students</p>
+
+            }
+            
+            </>
           }
 
 

@@ -7,6 +7,10 @@ import { deleteGradingScheme, getGradeSchemeList } from './Helper';
 import NavItem from '../../components/HeaderComponents/NavItem';
 import { getClass } from '../Classroom/Helper/Helper';
 import { useTitle } from '../../hooks/useTitle';
+import Loader from '../../components/Spinner'
+
+
+
 
 
 export default function GradingScheme() {
@@ -19,7 +23,8 @@ export default function GradingScheme() {
     const redText = `px-3 py-4 text-center whitespace-nowrap text-sm font-medium text-red-600`;
     const blackText = `px-3 py-4 text-center whitespace-nowrap text-sm font-medium`;
     const navigate = useNavigate();
-    
+    const [isLoading, setIsLoading] = useState(true)
+
 
 
     function getSession() {
@@ -34,6 +39,9 @@ export default function GradingScheme() {
                 const classData = await getClass(id);
                 setClassroom(classData);
                 const gradeData = await getGradeSchemeList(id);
+                if (!gradeData.length) {
+                    setIsLoading(false)
+                }
                 setGrades(gradeData);
 
             } catch (error) {
@@ -52,7 +60,7 @@ export default function GradingScheme() {
 
     return (
         <>
-            <Header title={classroom.name} links={navItem} loggedIn={true}/>
+            <Header title={classroom.name} links={navItem} loggedIn={true} />
 
             <main className='dark:bg-gray-400'>
                 <br />
@@ -78,7 +86,7 @@ export default function GradingScheme() {
                                 <th scope="col" className={`px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}>
 
                                 </th>
-                                
+
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
@@ -87,13 +95,13 @@ export default function GradingScheme() {
 
                                     <tr key={grade.id}>
 
-                                        <td className={grade.color === 'red'? redText : blackText}> 
+                                        <td className={grade.color === 'red' ? redText : blackText}>
                                             {grade.start} - {grade.end}
                                         </td>
-                                        <td className={grade.color === 'red'? redText : blackText}>
+                                        <td className={grade.color === 'red' ? redText : blackText}>
                                             {grade.letter}
                                         </td>
-                                        <td className={grade.color === 'red'? redText : blackText}>
+                                        <td className={grade.color === 'red' ? redText : blackText}>
                                             {grade.remark}
                                         </td>
 
@@ -108,20 +116,39 @@ export default function GradingScheme() {
                                 ))
 
                                 :
-                                <tr>
-                                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        Nill
-                                    </td>
-                                    <td className="px-3 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">
-                                        Nill
-                                    </td>
-                                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        Nill
-                                    </td>
-                                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                <>
+                                    {isLoading ?
+                                        <tr>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            </td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">
+                                                <Loader />
+                                            </td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            </td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 
-                                    </td>
-                                </tr>
+                                            </td>
+                                        </tr>
+                                        :
+                                        <tr>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Nill
+                                            </td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">
+                                                Nill
+                                            </td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                Nill
+                                            </td>
+                                            <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </>
+
                             }
 
                         </tbody>

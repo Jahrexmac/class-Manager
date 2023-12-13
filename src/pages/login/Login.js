@@ -5,10 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from '../../components/Layouts/Header';
 import { useTitle } from "../../hooks/useTitle";
 import login from "./LoginHandler";
+import Loader from '../../components/Spinner'
 
 export default function Login() {
     useTitle('Login')
     const [isError, setIsError] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
+
     const navItem = [];
     //   useTitle("Login");
     const navigate = useNavigate();
@@ -16,6 +19,7 @@ export default function Login() {
     const password = useRef();
 
     async function handleLogin(event) {
+        setIsLogin(true)
         event.preventDefault();
         try {
             const authDetail = {
@@ -24,6 +28,7 @@ export default function Login() {
             }
             const data = await login(authDetail);
             data.accessToken ? navigate("/classroom") : navigate("/home");
+            
         } catch (error) {
             setIsError(true)
             //   toast.error(error.message, {closeButton: true, position: "bottom-center"});
@@ -48,19 +53,23 @@ export default function Login() {
                         <input ref={password} type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                     </div>
                     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log In</button>
+                   
                 </form>
                 {
                     isError ?
                         <p className="my-2 bg-white rounded-md  p-2 text-center text-red-500">Incorrect Email or Password </p>
                         :
-                        ''
+                        <>
+                        {isLogin ? 
+                        <div className="flex justify-center"> <Loader /></div>
+                           
+                            :
+                            ''
+                     }
+                     </>
                 }
                 <p className="text-center dark:text-white">Dont have an account? <Link to='/register'><span className="text-green-700 dark:text-lime-300">Signup</span></Link> </p>
-                {/* <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-3 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
-                    <Link to='/register'>Signup</Link>
-                </button> */}
-                {/* <button onClick={handleLoginGuest} className="mt-3 cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login As Guest</button> */}
-            </main>
+                </main>
         </>
     )
 }

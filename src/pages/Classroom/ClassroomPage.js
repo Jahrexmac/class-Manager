@@ -1,22 +1,31 @@
-import React, { useState,  useEffect  } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Layouts/Header'
 import NavItem from '../../components/HeaderComponents/NavItem'
 import ClassCard from './components/ClassCard'
 import { getClasses } from './Helper/Helper'
 import { useTitle } from '../../hooks/useTitle'
+import Loader from '../../components/Spinner'
+
 
 export default function ClassroomPage() {
   useTitle('Classroom')
 
   const [classRooms, setClassRooms] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
- 
+
+
   useEffect(() => {
-    async function fetchClasses(){
-      try{
+    async function fetchClasses() {
+      try {
         const data = await getClasses();
-        setClassRooms(data); 
-      } catch(error){
+        if(data.length){
+          setIsLoading(false)
+        }else{
+          setIsLoading(false)
+        }
+        setClassRooms(data);
+      } catch (error) {
         // toast.error(error.message, {closeButton: true, position: "bottom-center" });
       }
     }
@@ -28,7 +37,7 @@ export default function ClassroomPage() {
 
   return (
     <>
-      <Header links={navItem} loggedIn={true}/>
+      <Header links={navItem} loggedIn={true} />
 
       <main className='my-20 dark:bg-gray-400'>
 
@@ -36,12 +45,22 @@ export default function ClassroomPage() {
 
           {classRooms.length ?
             classRooms.map((classRoom) => (
-              <ClassCard key = {classRoom.id} classRoom = {classRoom}/>
+              <ClassCard key={classRoom.id} classRoom={classRoom} />
             ))
             :
-            'You Dont Have Any Class Room To Manage, Please Create A Class Room'
-          } 
-         
+            <>
+              {
+                isLoading ?
+                  <Loader />
+                  :
+                  <p className='text-center'>You Dont Have Any Class Room To Manage, Please Create A Class Room</p>
+
+              }
+
+            </>
+
+          }
+
 
         </div>
       </main>
