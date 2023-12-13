@@ -125,15 +125,10 @@ export default function ClassroomResultSimplified() {
                             </div>
                             :
                             <table className="w-full table-auto">
-                                <thead>
-                                    <tr>
-                                        <th ></th>
-                                        <th className='dark:text-yellow-400'>{classroom.name ? (classroom.name).toUpperCase() : ''} CLASS RESULTS</th>
-                                        <th></th>
-                                        <th></th>
-
-                                    </tr>
-                                </thead>
+                                <caption className='caption-top'>
+                                <div className='dark:text-yellow-400'>{classroom.name ? (classroom.name).toUpperCase() : ''} CLASS RESULTS</div>
+                                </caption>
+                
                                 <thead >
                                     <tr className="px-6 py-3 text-center text-xs font-sm bg-blue-500 text-white dark:bg-gray-600 dark:text-yellow-400 uppercase tracking-wider">
                                         <th className="px-4 py-2">Student Names</th>
