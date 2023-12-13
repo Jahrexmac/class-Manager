@@ -77,7 +77,7 @@ export default function StudentDetailPage() {
         const studentsDetails = await getStudents(studentDetails.classroom);// retrieves all student in class
 
         const resultData = await studentResultCalculator(allSubjectData, gradeData)
-        if(resultData.length){
+        if (resultData.length) {
           setIsLoading(false)
         }
         setSubjectResult(resultData[0])
@@ -153,7 +153,9 @@ export default function StudentDetailPage() {
         <>
           {
             isLoading ?
-              <Loader />
+              <div className='flex justify-center'>
+                <Loader />
+              </div>
               :
               <>
                 <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
