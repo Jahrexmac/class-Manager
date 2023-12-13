@@ -49,6 +49,7 @@ export default function StudentDetailPage() {
     async function fetchStudentData() {
       try {
         const studentDetails = await getStudent(id);
+        
        
         if (studentDetails.sex === 'Male') {
           setIsMale(true)
@@ -71,6 +72,11 @@ export default function StudentDetailPage() {
         const classroom = await getClass(studentDetails.classroom);
         setClassroom(classroom);
         const subjectListData = await getSubjectList(studentDetails.classroom);
+
+        if(!subjectListData.length){
+          setIsLoading(false)
+        }
+
         setSubjectList(subjectListData[0].subjects);
         const assessmentListData = await getAssessmentList(studentDetails.classroom);
         setAssessmentList(assessmentListData[0].assessments);
@@ -79,7 +85,7 @@ export default function StudentDetailPage() {
         let resultData = []
         resultData = await studentResultCalculator(allSubjectData, gradeData)
 
-        if (resultData.length ||studentDetails.name ) {
+        if (resultData.length) {
           setIsLoading(false)
         }
         
