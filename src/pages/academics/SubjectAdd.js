@@ -133,7 +133,7 @@ export default function SubjectAdd() {
         <main className='dark:bg-gray-400'>
 
             <div className="flex flex-col items-center justify-center min-h-screen">
-                <h3 className="text-xl dark:text-white font-bold mb-6">{assessmentList.length ? "Add Subject(s)" : "Add Subject(s) and Assessment(s)"}</h3>
+                <h3 className=" dark:text-white font-bold mb-6">{assessmentList.length ? "Add Subject(s)" : "Add Subject(s) and Assessment(s)"}</h3>
                 <form onSubmit={handleCreateAssessment} className="w-full max-w-xl bg-white rounded-lg overflow-hidden shadow-md p-6 sm:p-8 md:p-10 lg:p-12">
                     <div className="mb-6">
                         <label forhtml="subjects" className="block text-gray-700 font-bold mb-2">Subjects:</label>
