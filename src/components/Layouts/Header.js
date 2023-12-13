@@ -41,7 +41,7 @@ export default function Header(props) {
                             }
                         </span>
                     </Link>
-                 
+
                     <div className="flex items-center md:order-2">
 
                         {props.loggedIn ?
@@ -49,7 +49,7 @@ export default function Header(props) {
                                 <Link to='/'>Logout</Link>
                             </button>
                             :
-                            <button className= {props.signUp ? "text-white  hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-3 py-2 text-center bg-blue-600  mr-2" : "hidden"}>
+                            <button className={props.signUp ? "text-white  hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-3 py-2 text-center bg-blue-600  mr-2" : "hidden"}>
                                 <Link to='/login'>Login</Link>
                             </button>
                         }
@@ -83,22 +83,20 @@ export default function Header(props) {
 
                         </div>
                         :
-                    //     <div className="items-center justify-between  w-full md:flex md:w-auto md:order-1" id="navbar-user">
-                    //     <ul className="flex flex-col font-medium p-4 md:p-0 mt-4  md:flex-row md:space-x-8 md:mt-0 md:border-0">
-                    //         {/* this will hold nav item */}
-                    //         {props.links ?
-                    //             props.links.map((link) => (
-                    //                 link
-                    //             ))
-                    //             :
-                    //             ''
-                    //         }
+                            <div className="hidden md:block items-center justify-between  w-full md:flex md:w-auto md:order-1" id="navbar-large">
+                            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4  md:flex-row md:space-x-8 md:mt-0 md:border-0">
+                                {/* this will hold nav item */}
+                                {props.links ?
+                                    props.links.map((link) => (
+                                        link
+                                    ))
+                                    :
+                                    ''
+                                }
 
-                    //     </ul>
+                            </ul>
 
-                    // </div>
-                    ''
-
+                        </div>
                     }
 
                 </div>
