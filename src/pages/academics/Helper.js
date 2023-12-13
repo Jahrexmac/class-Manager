@@ -254,7 +254,6 @@ export async function subjectAndAsessementDelete(students, subjectNames) {
 
                 const assessmentDeleteList = await getAssessmentDelete(subjectDelete[0].id)
                 if (assessmentDeleteList.length) {
-                    console.log(assessmentDeleteList)
                     let z = 0
                     while (z < assessmentDeleteList.length) {
                         deleteAssessment(assessmentDeleteList[z].id)
