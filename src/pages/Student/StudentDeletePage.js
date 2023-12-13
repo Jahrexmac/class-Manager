@@ -65,8 +65,8 @@ export default function StudentDeletePage() {
   }
   return (
     <>
+      <Header link={navItem} title={student.name} loggedIn={true} />
       <main className='dark:bg-gray-400'>
-        <Header link={navItem} title={student.name} loggedIn={true}/>
         <br />
         <br />
         <br />
@@ -74,7 +74,7 @@ export default function StudentDeletePage() {
         <br />
 
         <div className="flex justify-center">
-          <h3 className="text-3xl dark:text-white font-bold">Are You Sure You Want To Delete {student.name} ? </h3>
+          <h3 className="text-xl dark:text-white font-bold">Are You Sure You Want To Delete {student.name} ? </h3>
         </div>
 
         <form onSubmit={handleDeleteStudent}>
