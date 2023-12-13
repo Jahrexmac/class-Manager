@@ -12,7 +12,7 @@ export default async function register(authDetail){
     
     if(data.accessToken){
         sessionStorage.setItem("token", JSON.stringify(data.accessToken));
-        sessionStorage.setItem("userid", JSON.stringify(data.user.id));
+        sessionStorage.setItem("cmid", JSON.stringify(data.user.id));
     }
     return data;
 }

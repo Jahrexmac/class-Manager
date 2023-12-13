@@ -182,29 +182,29 @@ export default function StudentDetailPage() {
         </div>
         <br />
         <h3 className="text-lg leading-6 font-medium text-center "><span className='p-2 rounded-md text-white dark:text-pink-300 bg-gray-900'>{student.name ? (student.name).toUpperCase() : ''}</span></h3>
-        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-3 mt-4 ">
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3 mt-4 ">
           <div className="sm:col-span-1 ">
-            <dt className="text-sm font-medium text-gray-500 dark:text-white">Classroom</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Classroom:</dt>
             <dd className="mt-1 text-sm text-gray-900 dark:text-white">{classroom.name}</dd>
           </div>
           <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500 dark:text-white">Date of Birth</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Date of Birth:</dt>
             <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.dob}</dd>
           </div>
           <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500 dark:text-white">Sex</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Sex:</dt>
             <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.sex}</dd>
           </div>
           <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500 dark:text-white">Email</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Email:</dt>
             <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.email}</dd>
           </div>
           <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500 dark:text-white">Phone Number</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Phone Number:</dt>
             <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.phone}</dd>
           </div>
           <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500 dark:text-white">Address</dt>
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">Address:</dt>
             <dd className="mt-1 text-sm text-gray-900 dark:text-white">{student.address}</dd>
           </div>
         </dl>

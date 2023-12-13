@@ -48,44 +48,44 @@ export default function ClassroomDetail() {
   }, []); //eslint-disable-line
 
   let navItem = []
-if (students.length > 0 && subjects.length > 0){
-  navItem = [
-    <NavItem key={1} path="/classroom" name="Back" />,
-    <NavItem key={2} path={`/add-student/${id}`} classId={id} name="+ Student" />,
-    <NavItem key={3} path={`/edit-classroom/${id}`} name="Edit" />,
-    <NavItem key={4} path={`/delete-classroom/${id}`} name="Delete" />,
-    <NavItem key={5} path={`/add-subject/${id}`} name="+ Subject" />,
-    <NavItem key={6} path={`/delete-subject/${id}`} name="- Subject" />,
-    <NavItem key={7} path={`/grading-scheme/${id}`} name="Grading" />,
-    <NavItem key={8} path={`/class-results/${id}`} name="Results" />,
-  ]
-}else if (students.length > 0 && subjects.length === 0){
-  navItem = [
-    <NavItem key={1} path="/classroom" name="Back" />,
-    <NavItem key={2} path={`/add-student/${id}`} classId={id} name="+ Student" />,
-    <NavItem key={3} path={`/edit-classroom/${id}`} name="Edit" />,
-    <NavItem key={4} path={`/delete-classroom/${id}`} name="Delete" />,
-    <NavItem key={5} path={`/add-subject/${id}`} name="+ Subject" />,
-    <NavItem key={6} path={`/delete-subject/${id}`} name="- Subject" />,
-    <NavItem key={7} path={`/grading-scheme/${id}`} name="Grading" />,
-  ]
-}else{
-  navItem = [
-    <NavItem key={1} path="/classroom" name="Back" />,
-    <NavItem key={2} path={`/add-student/${id}`} classId={id} name="+ Student" />,
-    <NavItem key={3} path={`/edit-classroom/${id}`} name="Edit" />,
-    <NavItem key={4} path={`/delete-classroom/${id}`} name="Delete" />,
-  ]
-  
+  if (students.length > 0 && subjects.length > 0) {
+    navItem = [
+      <NavItem key={1} path="/classroom" name="Back" />,
+      <NavItem key={2} path={`/add-student/${id}`} classId={id} name="+ Student" />,
+      <NavItem key={3} path={`/edit-classroom/${id}`} name="Edit" />,
+      <NavItem key={4} path={`/delete-classroom/${id}`} name="Delete" />,
+      <NavItem key={5} path={`/add-subject/${id}`} name="+ Subject" />,
+      <NavItem key={6} path={`/delete-subject/${id}`} name="- Subject" />,
+      <NavItem key={7} path={`/grading-scheme/${id}`} name="Grading" />,
+      <NavItem key={8} path={`/class-results/${id}`} name="Results" />,
+    ]
+  } else if (students.length > 0 && subjects.length === 0) {
+    navItem = [
+      <NavItem key={1} path="/classroom" name="Back" />,
+      <NavItem key={2} path={`/add-student/${id}`} classId={id} name="+ Student" />,
+      <NavItem key={3} path={`/edit-classroom/${id}`} name="Edit" />,
+      <NavItem key={4} path={`/delete-classroom/${id}`} name="Delete" />,
+      <NavItem key={5} path={`/add-subject/${id}`} name="+ Subject" />,
+      <NavItem key={6} path={`/delete-subject/${id}`} name="- Subject" />,
+      <NavItem key={7} path={`/grading-scheme/${id}`} name="Grading" />,
+    ]
+  } else {
+    navItem = [
+      <NavItem key={1} path="/classroom" name="Back" />,
+      <NavItem key={2} path={`/add-student/${id}`} classId={id} name="+ Student" />,
+      <NavItem key={3} path={`/edit-classroom/${id}`} name="Edit" />,
+      <NavItem key={4} path={`/delete-classroom/${id}`} name="Delete" />,
+    ]
 
-}
+
+  }
   return (
     <>
-      <Header links={navItem} title={classroom.name} loggedIn={true}/>
+      <Header links={navItem} title={classroom.name} loggedIn={true} />
 
       <main className=' my-20 dark:bg-gray-400'>
-        <div ><span className='bg-gray-500  rounded py-2 px-2 text-white'>Total Number Of Students:{students.length} </span> </div>
-
+        <div ><span className='bg-gray-500  rounded py-2 px-2 text-white'>Students: {students.length} </span> </div>
+        <br></br>
         <div className="flex flex-wrap justify-center lg:flex-row">
 
           {students.length ?
