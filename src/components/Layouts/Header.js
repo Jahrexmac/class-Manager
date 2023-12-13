@@ -83,20 +83,21 @@ export default function Header(props) {
 
                         </div>
                         :
-                        <div className="items-center justify-between  w-full md:flex md:w-auto md:order-1" id="navbar-user">
-                        <ul className="flex flex-col font-medium p-4 md:p-0 mt-4  md:flex-row md:space-x-8 md:mt-0 md:border-0">
-                            {/* this will hold nav item */}
-                            {props.links ?
-                                props.links.map((link) => (
-                                    link
-                                ))
-                                :
-                                ''
-                            }
+                    //     <div className="items-center justify-between  w-full md:flex md:w-auto md:order-1" id="navbar-user">
+                    //     <ul className="flex flex-col font-medium p-4 md:p-0 mt-4  md:flex-row md:space-x-8 md:mt-0 md:border-0">
+                    //         {/* this will hold nav item */}
+                    //         {props.links ?
+                    //             props.links.map((link) => (
+                    //                 link
+                    //             ))
+                    //             :
+                    //             ''
+                    //         }
 
-                        </ul>
+                    //     </ul>
 
-                    </div>
+                    // </div>
+                    ''
 
                     }
 
