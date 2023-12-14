@@ -4,6 +4,7 @@ import { useTitle } from '../../hooks/useTitle';
 import { getStudents } from '../Classroom/Helper/Helper';
 import { getStudent } from '../Student/Helper/Helper';
 import { getStudentAssessmentList, getSubject, editAssessment, getStudentSubjects, getAllStudentSubject } from './Helper'
+import {getAssessmentList} from './Helper'
 
 
 export default function SubjectScoreEdit() {
@@ -13,6 +14,8 @@ export default function SubjectScoreEdit() {
     const [subject, setSubject] = useState([]);
     const [student, setStudent] = useState([]);
     const [students, setStudents] = useState([]);
+    const [classAssessment, setClassAssessment] = useState([]);
+
 
     const navigate = useNavigate();
 
@@ -32,6 +35,8 @@ export default function SubjectScoreEdit() {
                 setStudent(studentData)
                 const studentsData = await getStudents(studentData.classroom)
                 setStudents(studentsData)
+                const classAssessmentData = await getAssessmentList(studentData.classroom)
+                setClassAssessment(classAssessmentData[0].assessments)
             } catch (error) {
                 // toast.error(error.message, {closeButton: true, position: "bottom-center" });
             }
@@ -135,9 +140,9 @@ export default function SubjectScoreEdit() {
                 <form onSubmit={handleEditScore} id='new-student-form' className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6" >
                     <div className="mb-4">
                         {/* {% for assessment in assessments%} */}
-                        {assessmentList.map((assessment) => (
+                        {assessmentList.map((assessment, i) => (
                             <div key={assessment.id} >
-                                <label htmlFor={assessment.name} className="block text-gray-700 font-bold mb-2">{assessment.name}:</label>
+                                <label htmlFor={assessment.name} className="block text-gray-700 font-bold mb-2">{classAssessment[i]}:</label>
                                 <input type='number' defaultValue={assessment.score} name={assessment.name} className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
                             </div>
                         ))
@@ -146,10 +151,10 @@ export default function SubjectScoreEdit() {
                     </div>
                     {/* {% endfor %} */}
 
-                    <div className="flex justify-between">
-                        <input type="submit" name="Edit" value="Done" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2" />
-                        <input type="submit" name="Edit-Next-Subject" value="Next Subject " className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2" />
-                        <input type="submit" name="Edit-Next-Student" value="Next Student" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2" />
+                    <div className="flex justify-around">
+                        <input type="submit" name="Edit" value="Done" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 md:px-4 rounded focus:outline-none focus:shadow-outline my-2" />
+                        <input type="submit" name="Edit-Next-Subject" value="Next Subject " className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-1 md:px-4 rounded focus:outline-none focus:shadow-outline my-2" />
+                        <input type="submit" name="Edit-Next-Student" value="Next Student" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:px-4 px-1 rounded focus:outline-none focus:shadow-outline my-2" />
                     </div>
                 </form>
             </main>
