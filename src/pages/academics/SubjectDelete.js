@@ -11,7 +11,19 @@ import { useTitle } from '../../hooks/useTitle';
 
 export default function SubjectDelete() {
     useTitle('Delete Subject')
-    const { id } = useParams();
+    let { id } = useParams();
+    let arrayId = id.split(',')
+    let studentId
+    let isStudentId = false
+    if(arrayId.length === 2){
+        id = arrayId[0]
+        studentId = arrayId[1]
+        isStudentId = true
+    }else{
+        id = arrayId[0]
+    }
+    
+
     const [subjectList, setSubjectList] = useState([]);
     const [subjectListId, setSubjectListId] = useState([]);
 
@@ -68,7 +80,12 @@ export default function SubjectDelete() {
             // edit the subject list in db
             editSubjectList(subjectDetail, subjectListId,subjectList.length);
 
-            browserData.token ? navigate(`/classroom-details/${id}`) : navigate('/');
+            if (isStudentId){
+                browserData.token ? navigate(`/student-details/${studentId}`) : navigate('/');
+            }else{
+                browserData.token ? navigate(`/classroom-details/${id}`) : navigate('/');
+            }
+
         } catch (error) {
             //   toast.error(error.message, {closeButton: true, position: "bottom-center"});
             // this will carry a error message cos registration failed

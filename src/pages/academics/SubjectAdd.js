@@ -8,7 +8,19 @@ import { useTitle } from '../../hooks/useTitle';
 
 export default function SubjectAdd() {
     useTitle('Add Subject')
-    const { id } = useParams();
+    let { id } = useParams();
+    let arrayId = id.split(',')
+    let studentId
+    let isStudentId = false
+    if(arrayId.length === 2){
+        id = arrayId[0]
+        studentId = arrayId[1]
+        isStudentId = true
+    }else{
+        id = arrayId[0]
+    }
+    
+
     // eslint-disable-next-line
     const [classroom, setClassroom] = useState([]);
     const [students, setStudents] = useState([]);
@@ -125,7 +137,11 @@ export default function SubjectAdd() {
             assessmentCreator(students, subjectListForm, assessmentList[0].assessments); // this condition is because there exist a class assessment
             editSubjectList(subjectDetail, subjectList[0].id) // this updates existing subject list for class
         }
-        browserData.token ? navigate(`/classroom-details/${id}`) : navigate('/');
+        if (isStudentId){
+            browserData.token ? navigate(`/student-details/${studentId}`) : navigate('/');
+        }else{
+            browserData.token ? navigate(`/classroom-details/${id}`) : navigate('/');
+        }
     }
 
 

@@ -39,8 +39,8 @@ export default function StudentDetailPage() {
 
 
   const navItem = [
-    <NavItem key={1} path={`/add-subject/${id}`} name="+ Subject" />,
-    <NavItem key={2} path={`/delete-subject/${id}`} name="- Subject" />,
+    <NavItem key={1} path={`/add-subject/${student.classroom},${id}`} name="+ Subject" />,
+    <NavItem key={2} path={`/delete-subject/${student.classroom},${id}`} name="- Subject" />,
     <NavItem key={3} path={`/edit-student/${id}`} name="Edit Info" />,
     <NavItem key={4} path={`/delete-student/${id}`} name="Delete" />,
     <NavItem key={5} path={`/classroom-details/${student.classroom}`} name="Back to class" />,
